@@ -1,0 +1,52 @@
+HALO2600 SD ONLY V5 -- RELATORIO DE VERIFICACAO PRE-ENTREGA
+2026-10-15
+
+STATUS
+- Validacao de codigo e simulacao local: PASSOU.
+- Compilacao real com Arduino ESP32 core 3.3.12: NAO REALIZADA (toolchain nao instalado neste ambiente).
+- Teste fisico ESP32-S3 + ILI9341 + SD + Dabble: NAO REALIZADO (sem acesso a placa).
+- Portanto V5 e TESTE EXPERIMENTAL, nao uma nova release estavel.
+
+CODIGO FONTE
+- Base: V4 derivada do repositorio HALO2600 v1.0.0.
+- 13 modulos .c do nucleo passaram em gcc -std=gnu11 -fsyntax-only no host.
+- Teste sintatico do .ino e emuapi.cpp em g++ -std=gnu++17 usando stubs Arduino: PASSOU.
+- Integridade dos modulos do nucleo: .c/.h identicos a base original local; apenas .ino
+  e a camada emuapi.cpp ja preparada para SD na transicao v1->v4.
+- Verificacoes #error: setup sem USE_HSPI_PORT rejeitado; TOUCH_CS=14 rejeitado;
+  pinos de TFT incorretos rejeitados.
+- Nao existem includes de LittleFS, WiFi, HTTPClient no .ino ou emuapi.cpp.
+
+CONFIRMACAO DE BIBLIOTECAS
+- TFT_eSPI::getSPIinstance() devolve SPIClass& (consulta ao codigo oficial TFT_eSPI).
+- TFT_eSPI ESP32-S3 com USE_HSPI_PORT cria uma SPIClass(HSPI).
+- Arduino ESP32 3.3.12 SD.begin recebe SPIClass& e chama spi.begin().
+- Arduino ESP32 3.3.12 SPIClass::begin retorna true de imediato quando _spi ja
+  foi inicializado, sem reassociar os pinos. Isso explica por que SD.begin no
+  mesmo objeto inicializado pelo TFT e adequado.
+
+SIMULACAO DE EXECUCAO (NAO E TESTE NO HARDWARE)
+- Objeto SPI do SD = referencia devolvida por TFT_eSPI: PASSOU.
+- Objeto global SPI e diferente do objeto HSPI simulado: PASSOU.
+- Pasta simulada com 900 ROMs e arquivos nao-ROM misturados: indexou exatamente 500.
+- Indexacao parou apos 563 entradas do filesystem simulado: PASSOU.
+- Ordenacao alfabetica do subconjunto indexado: PASSOU.
+- Leitura da ROM simulada por emu_LoadFile com buffer 16K: PASSOU.
+- Teste de entrar no emulador e voltar para o menu: PASSOU.
+- Pasta vazia: retornou 0 ROMs sem bloquear.
+- Extensoes .a26/.BIN com caixa mista: PASSOU.
+- Arquivos nao-ROM e caminhos muito longos: ignorados corretamente.
+- Zero operacoes de criacao/modificacao de arquivos no cartao durante o boot.
+
+LIMITACOES ATUAIS
+- O nucleo atual apenas aceita ROM entre 2K e 16K e mappers basicos por tamanho.
+- ROMs em subpastas de /Atari2600 nao sao indexadas.
+- O tempo de scanner depende do SD fisico e da ordem dos arquivos na FAT.
+- Se DabbleESP32 instalado tiver o bug heap_caps_free ja identificado, deve
+  ser corrigido na biblioteca; esta V5 nao modifica DabbleESP32.
+- A compilacao real e o teste integrado no ESP32-S3 ainda precisam ser feitos.
+
+INSTRUCOES PARA DEBUG
+- Monitor Serial 115200.
+- Primeiro verifique o setup TFT_eSPI: manter USE_HSPI_PORT; remover TOUCH_CS=14.
+- Enviar log desde HALO 2600 RETRO SD ONLY v5 ate ultima mensagem, se travar.

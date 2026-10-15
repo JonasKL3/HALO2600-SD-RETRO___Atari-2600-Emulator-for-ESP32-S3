@@ -1,0 +1,25 @@
+HALO 2600 - CONTROLES DABBLE
+
+DIGITAL MODE
+UP/DOWN       = cima/baixo
+LEFT/RIGHT    = esquerda/direita (corrigido/invertido no codigo)
+CROSS (X)     = FIRE
+SQUARE        = FIRE
+CIRCLE        = RESET
+START         = RESET
+TRIANGLE      = SELECT
+SELECT        = SELECT
+
+JOYSTICK MODE
+Eixo Y        = cima/baixo
+Eixo X        = esquerda/direita (sentido horizontal corrigido)
+CROSS (X)     = FIRE
+SQUARE        = FIRE
+CIRCLE        = RESET
+START         = RESET
+TRIANGLE      = SELECT
+SELECT        = SELECT
+
+Observacao:
+O SELECT e uma chave do console Atari 2600. Nem todo jogo apresenta uma
+mudanca visual imediata ao receber SELECT; isso depende do jogo/ROM.

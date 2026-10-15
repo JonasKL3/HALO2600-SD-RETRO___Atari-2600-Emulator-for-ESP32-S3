@@ -1,0 +1,7 @@
+TFT_eSPI upstream license reference
+===================================
+
+Upstream: https://github.com/Bodmer/TFT_eSPI
+Official license file: https://raw.githubusercontent.com/Bodmer/TFT_eSPI/master/license.txt
+
+The upstream license file states that the project evolved from Adafruit_ILI9341 (MIT), includes selected Adafruit_GFX functions covered by BSD, and applies the FreeBSD license to Bodmer's original code. Use the official upstream file as the authoritative/current text.
