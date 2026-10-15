@@ -1,0 +1,31 @@
+# ROMs e dumps (não publicar jogos)
+*.a26
+*.A26
+*.bin
+*.BIN
+*.rom
+*.ROM
+*.c26
+*.C26
+
+# Dados pessoais e credenciais
+WiFiConfig.h
+**/WiFiConfig.h
+*.env
+.env
+
+# Arquivos temporários e builds
+build/
+*.elf
+*.map
+*.hex
+*.uf2
+*.o
+*.d
+__pycache__/
+
+# IDE e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
